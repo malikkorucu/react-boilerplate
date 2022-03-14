@@ -1,0 +1,12 @@
+$primary: #027b55;
+$secondary: #e6f8e0;
+
+.active {
+    background-color: $secondary !important;
+    color: #027b55 !important;
+    font-weight: 500 !important;
+}
+
+.active-sub-text {
+    font-weight: 600;
+}
