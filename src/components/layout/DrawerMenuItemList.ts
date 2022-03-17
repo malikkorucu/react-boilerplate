@@ -1,5 +1,10 @@
 import { Dashboard } from "../../pages/Dashboard/dashboard.page";
-import { Equalizer, HomeRounded, ModeEditOutline } from "@mui/icons-material";
+import {
+  EditAttributes,
+  Equalizer,
+  HomeRounded,
+  ModeEditOutline,
+} from "@mui/icons-material";
 
 export const DrawerMenuRoutes = [
   // GENERAL
@@ -41,6 +46,7 @@ export const DrawerMenuRoutes = [
       },
     ],
   },
+  // SETTINGS
   {
     name: "Settings",
     children: [

@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
-import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { CircleRounded, Home } from "@mui/icons-material";
@@ -78,6 +74,12 @@ export default function CollapseListItem(props: any) {
                   fontSize: 14,
                   fontFamily: ' "Poppins", sans-serif',
                 }}
+                className={clsx({
+                  //TODO BURAYA PARENT ROOT CHILD ROOT KONTROLÜ YAPILACAK !!
+                  active:
+                    "/" + history.location.pathname.split("/")[1] ==
+                    props.item.path,
+                })}
               >
                 {props.item.label}
               </span>
@@ -101,46 +103,44 @@ export default function CollapseListItem(props: any) {
 
         <Collapse in={open} timeout="auto" unmountOnExit>
           {props.item.children.map((i: any, index: any) => (
-            <List key={index} component="div">
-              <ListItemButton
-                sx={{
-                  maxHeight: 39,
-                  justifyContent: props.open ? "initial" : "center",
-                  px: 3,
-                  mb: 1,
-                  borderRadius: 2,
-                }}
-                onClick={() => {
-                  history.push(i.path);
-                }}
-              >
-                <ListItemIcon>
-                  <SvgIcon
-                    component={CircleRounded}
-                    fontSize="inherit"
-                    style={{ fontSize: 8 }}
+            <ListItemButton
+              sx={{
+                maxHeight: 39,
+                justifyContent: props.open ? "initial" : "center",
+                px: 3,
+                mb: 2,
+                borderRadius: 2,
+              }}
+              onClick={() => {
+                history.push(i.path);
+              }}
+            >
+              <ListItemIcon>
+                <SvgIcon
+                  component={CircleRounded}
+                  fontSize="inherit"
+                  style={{ fontSize: 8 }}
+                  className={clsx({
+                    active: history.location.pathname === i.path,
+                  })}
+                />
+              </ListItemIcon>
+              {props.open && (
+                <ListItemText sx={{ fontSize: 30 }}>
+                  <span
+                    style={{
+                      fontSize: 13,
+                      fontFamily: ' "Poppins", sans-serif',
+                    }}
                     className={clsx({
-                      active: history.location.pathname === i.path,
+                      "active-sub-text": history.location.pathname === i.path,
                     })}
-                  />
-                </ListItemIcon>
-                {props.open && (
-                  <ListItemText sx={{ fontSize: 30 }}>
-                    <span
-                      style={{
-                        fontSize: 13,
-                        fontFamily: ' "Poppins", sans-serif',
-                      }}
-                      className={clsx({
-                        "active-sub-text": history.location.pathname === i.path,
-                      })}
-                    >
-                      {i.label}
-                    </span>
-                  </ListItemText>
-                )}
-              </ListItemButton>
-            </List>
+                  >
+                    {i.label}
+                  </span>
+                </ListItemText>
+              )}
+            </ListItemButton>
           ))}
         </Collapse>
       </>

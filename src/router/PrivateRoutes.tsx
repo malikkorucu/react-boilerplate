@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard/dashboard.page";
 import { ErrorPage } from "../pages/ErrorPage/ErrorPage";
 import { OtherPage } from "../pages/Other/other-page";
+import { Statistics } from "../pages/Statistics/Statistics";
 import { routes } from "./_routes";
 
 export function PrivateRoutes() {
@@ -12,8 +13,7 @@ export function PrivateRoutes() {
     <Suspense fallback={<div>fallback component will be come here</div>}>
       <Switch>
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/statistics" component={() => <div>istatisikler</div>} />
-
+        <Route path="/statistics" component={Statistics} />
         <Redirect exact={true} from="/" to="/dashboard" />
         <Redirect to="error/404" />
       </Switch>

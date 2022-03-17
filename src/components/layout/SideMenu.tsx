@@ -19,7 +19,7 @@ import { useHistory } from "react-router-dom";
 import "./side.scss";
 import { Link } from "react-router-dom";
 
-const drawerWidth = 250;
+const drawerWidth = 300;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
