@@ -19,7 +19,7 @@ export const Statistics = () => {
 
   return (
     <div>
-      <NestedRoutes exact={path} childs={children} />
+      <NestedRoutes exact={path} children={children} />
     </div>
   );
 };

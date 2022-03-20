@@ -18,6 +18,7 @@ import { useHistory } from "react-router-dom";
 
 import "./side.scss";
 import { Link } from "react-router-dom";
+import PopoverButton from "../common/Popover/Popover";
 
 const drawerWidth = 300;
 
@@ -109,7 +110,7 @@ export default function SideMenu(props: any) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar sx={{}} position="fixed" open={open}>
+      <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -123,6 +124,9 @@ export default function SideMenu(props: any) {
           >
             <img width={40} src="/logo.svg" alt="" />
           </IconButton>
+          <div className="w-100 d-flex justify-content-end">
+            <PopoverButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -154,12 +158,12 @@ export default function SideMenu(props: any) {
           {props.drawerItems.map((provider: any, index: any) => (
             <div key={index}>
               {open && (
-                <h5
+                <h6
                   key={index}
                   style={{ paddingLeft: 15, paddingRight: 15, margin: 0 }}
                 >
                   {provider.name}
-                </h5>
+                </h6>
               )}
               <List
                 sx={{ paddingLeft: open ? 2 : 1, paddingRight: open ? 2 : 1 }}

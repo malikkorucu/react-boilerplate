@@ -1,3 +1,10 @@
+$primary: #0cab57;
+$secondary: #e6f8e0;
+
+body {
+    font-size: 12px !important;
+}
+
 ul,
 li {
     margin: 0;
@@ -6,7 +13,7 @@ li {
 }
 
 .dropdown-btn {
-    width:130px;
+    width: 130px;
     background-color: red;
     .btn-content {
         display: flex;
@@ -16,5 +23,77 @@ li {
         .title {
             margin-left: 7px;
         }
+    }
+}
+
+.MuiFormControl-root {
+    width: 100% !important;
+}
+
+.MuiOutlinedInput {
+    width: 100% !important;
+    &-root {
+        border-radius: 8px !important;
+        &.Mui-focused {
+            .MuiOutlinedInput-notchedOutline {
+                border-color: $primary !important;
+            }
+        }
+
+        input {
+            font-size: 17px !important;
+            font-family: "Poppins", sans-serif !important;
+        }
+    }
+}
+
+.MuiInputLabel {
+    &-root {
+        font-family: "Public Sans", sans-serif !important;
+        &.Mui-focused {
+            color: $primary !important;
+        }
+    }
+}
+
+.MuiButton {
+    &-root {
+        text-transform: none !important;
+        width: 100% !important;
+        background-color: $primary !important;
+        padding: 10px 20px !important;
+        font-family: "Public Sans", sans-serif !important;
+        border-radius: 8px !important;
+    }
+}
+
+.MuiCheckbox {
+    &-root {
+        svg path {
+            d: path(
+                "M17 3a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4h10zm0 2H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z"
+            ) !important;
+        }
+        &.Mui-checked {
+            color: #0cab57 !important;
+            svg path {
+                d: path(
+                    "M17 3a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4h10zm-1.372 4.972a1.006 1.006 0 00-.928.388l-3.78 5-1.63-2.08a1.001 1.001 0 00-1.58 1.23l2.44 3.11a1 1 0 001.58-.01l4.57-6v-.03a1.006 1.006 0 00-.672-1.608z"
+                ) !important;
+            }
+        }
+    }
+}
+
+.MuiTypography-root {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 0.9rem !important;
+}
+
+.MuiPopover {
+    &-paper {
+        margin-top: 10px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 0 20px 5px rgba(187, 187, 187, 0.4) !important;
     }
 }

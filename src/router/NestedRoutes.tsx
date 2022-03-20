@@ -1,12 +1,18 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 export const NestedRoutes = (props: any) => {
-  const { exact, childs } = props;
+  const { exact, children } = props;
   return (
     <Switch>
-      {childs.map((item: any) => (
-        <Route path={exact + item.path} component={item.component} />
+      {/* <Route exact path={exact} /> */}
+      {children.map((item: any, index: any) => (
+        <Route
+          key={index}
+          path={exact + item.path}
+          component={item.component}
+        />
       ))}
+      <Redirect exact from={exact} to="/auth/login" />
     </Switch>
   );
 };

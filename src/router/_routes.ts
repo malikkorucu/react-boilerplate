@@ -1,7 +1,7 @@
 import { Dashboard } from "../pages/Dashboard/dashboard.page";
 import { OtherPage } from "../pages/Other/other-page";
 import { ErrorPage } from "../pages/ErrorPage/ErrorPage";
-import { AuthPage } from "../pages/Auth/auth-page";
+import { AuthPage } from "../pages/Auth/auth.page";
 
 export const routes = [
   {
