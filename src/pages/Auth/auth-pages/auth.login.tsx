@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Alert, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -6,10 +6,12 @@ import { login } from "../../../services/auth.service";
 import { useDispatch } from "react-redux";
 import * as authRedux from "../../../redux/auth/auth.redux";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -24,7 +26,14 @@ export const Login = () => {
 
   const signIn = async (value: any) => {
     setLoading(true);
-    const res = await login(value) as any;
+    const res = (await login(value)) as any;
+
+    if (!res?.user) {
+      setErrorMessage("Lütfen bilgilerinizi kontrol ediniz !");
+    } else {
+      toast.success("Hoşgeldin " + res.user.name);
+    }
+
     dispatch(authRedux.actions.login(res?.user, res?.token?.access_token));
     setLoading(false);
   };
@@ -52,6 +61,9 @@ export const Login = () => {
             <div className="login-card">
               <h3 className="text-gray-500 mb-3">Sign in to Minimal</h3>
               <h6 className="text-gray mb-4">Enter your details below.</h6>
+
+              {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
               <TextField
                 name="email"
                 className="my-3"
