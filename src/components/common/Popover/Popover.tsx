@@ -5,6 +5,7 @@ import Popover from "@mui/material/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import {
   Avatar,
+  ButtonBase,
   Divider,
   List,
   ListItemIcon,
@@ -39,72 +40,74 @@ export default function PopoverButton() {
   const logout = () => {
     dispatch(authRedux.actions.logout());
   };
-  
+
   return (
-    <PopupState variant="popover" popupId="demo-popup-popover">
-      {(popupState) => (
-        <div>
-          {/* <Button variant="contained">Open Popover</Button> */}
-          <Avatar
-            {...bindTrigger(popupState)}
-            alt="Remy Sharp"
-            src="/static/images/avatar/1.jpg"
-            sx={{ width: 40, height: 40 }}
-          />
-          <Popover
-            {...bindPopover(popupState)}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <Typography sx={{ p: 2, borderRadius: 20, minWidth: 200 }}>
-              <List>
-                {items.map((item: any, index: any) => (
-                  <ListItemButton
-                    key={index}
-                    sx={{
-                      borderRadius: 3,
-                      height: 37,
-                    }}
-                  >
-                    <div
-                      className="w-100"
-                      style={{
-                        fontSize: 12,
+    <ButtonBase>
+      <PopupState variant="popover" popupId="demo-popup-popover">
+        {(popupState) => (
+          <div>
+            {/* <Button variant="contained">Open Popover</Button> */}
+            <Avatar
+              {...bindTrigger(popupState)}
+              alt="Remy Sharp"
+              src="/static/images/avatar/1.jpg"
+              sx={{ width: 40, height: 40 }}
+            />
+            <Popover
+              {...bindPopover(popupState)}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            >
+              <Typography sx={{ p: 2, borderRadius: 20, minWidth: 200 }}>
+                <List>
+                  {items.map((item: any, index: any) => (
+                    <ListItemButton
+                      key={index}
+                      sx={{
+                        borderRadius: 3,
+                        height: 37,
                       }}
                     >
-                      {item.label}
-                    </div>
-                  </ListItemButton>
-                ))}
-              </List>
-              <Divider />
-              <ListItemButton
-                onClick={logout}
-                className="mt-2"
-                sx={{
-                  borderRadius: 3,
-                  height: 37,
-                }}
-              >
-                <div
-                  className="w-100"
-                  style={{
-                    fontSize: 12,
+                      <div
+                        className="w-100"
+                        style={{
+                          fontSize: 12,
+                        }}
+                      >
+                        {item.label}
+                      </div>
+                    </ListItemButton>
+                  ))}
+                </List>
+                <Divider />
+                <ListItemButton
+                  onClick={logout}
+                  className="mt-2"
+                  sx={{
+                    borderRadius: 3,
+                    height: 37,
                   }}
                 >
-                  Logout
-                </div>
-              </ListItemButton>
-            </Typography>
-          </Popover>
-        </div>
-      )}
-    </PopupState>
+                  <div
+                    className="w-100"
+                    style={{
+                      fontSize: 12,
+                    }}
+                  >
+                    Logout
+                  </div>
+                </ListItemButton>
+              </Typography>
+            </Popover>
+          </div>
+        )}
+      </PopupState>
+    </ButtonBase>
   );
 }
