@@ -4,7 +4,6 @@ import { Dashboard } from "../pages/Dashboard/dashboard.page";
 import { ErrorPage } from "../pages/ErrorPage/ErrorPage";
 import { OtherPage } from "../pages/Other/other-page";
 import { Statistics } from "../pages/Statistics/Statistics";
-import { routes } from "./_routes";
 
 export function PrivateRoutes() {
   //    const ProfilePage = lazy(() => import('../modules/profile/ProfilePage')) => lazy load in react router dom

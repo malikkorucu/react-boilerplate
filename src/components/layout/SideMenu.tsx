@@ -20,7 +20,7 @@ import "./side.scss";
 import { Link } from "react-router-dom";
 import PopoverButton from "../common/Popover/Popover";
 
-const drawerWidth = 300;
+const drawerWidth = 270;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -158,12 +158,17 @@ export default function SideMenu(props: any) {
           {props.drawerItems.map((provider: any, index: any) => (
             <div key={index}>
               {open && (
-                <h6
+                <div
                   key={index}
-                  style={{ paddingLeft: 15, paddingRight: 15, margin: 0 }}
+                  style={{
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    margin: 0,
+                    fontSize: 14,
+                  }}
                 >
                   {provider.name}
-                </h6>
+                </div>
               )}
               <List
                 sx={{ paddingLeft: open ? 2 : 1, paddingRight: open ? 2 : 1 }}
@@ -203,14 +208,14 @@ export default function SideMenu(props: any) {
                         <SvgIcon
                           component={item.icon}
                           fontSize="inherit"
-                          style={{ fontSize: 20 }}
+                          style={{ fontSize: 18 }}
                         />
                         {/* <img width="13" src="/logo.svg" alt="" />{" "} */}
                       </ListItemIcon>
                       {open && (
                         <span
                           style={{
-                            fontSize: 14,
+                            fontSize: 12,
                           }}
                         >
                           {item.label}

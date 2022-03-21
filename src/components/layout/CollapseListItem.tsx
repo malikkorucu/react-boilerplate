@@ -71,7 +71,7 @@ export default function CollapseListItem(props: any) {
             <ListItemText>
               <span
                 style={{
-                  fontSize: 14,
+                  fontSize: 12,
                   fontFamily: ' "Poppins", sans-serif',
                 }}
                 className={clsx({
@@ -126,10 +126,10 @@ export default function CollapseListItem(props: any) {
                 />
               </ListItemIcon>
               {props.open && (
-                <ListItemText sx={{ fontSize: 30 }}>
+                <ListItemText  >
                   <span
                     style={{
-                      fontSize: 13,
+                      fontSize: 12,
                       fontFamily: ' "Poppins", sans-serif',
                     }}
                     className={clsx({

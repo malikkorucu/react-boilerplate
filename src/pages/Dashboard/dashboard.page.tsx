@@ -11,7 +11,11 @@ export const Dashboard: FC<any> = () => {
 
   const user = useSelector<RootState>(({ auth }) => auth.user) as IUser;
 
-  return <div>{user.name}</div>;
+  return (
+    <div>
+      <span>{user.name}</span>
+    </div>
+  );
 };
 
 const styles = {

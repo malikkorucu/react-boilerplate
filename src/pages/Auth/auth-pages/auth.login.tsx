@@ -34,7 +34,7 @@ export const Login = () => {
       toast.success("Hoşgeldin " + res.user.name);
     }
 
-    dispatch(authRedux.actions.login(res?.user, res?.token?.access_token));
+    dispatch(authRedux.actions.login(res?.token?.access_token, res?.user));
     setLoading(false);
   };
 
