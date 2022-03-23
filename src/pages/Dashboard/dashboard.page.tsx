@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { Dropdown } from "../../components/common/Dropdown/Dropdown";
+import MultipleSelectChip from "../../components/common/Select/Select";
 import { IUser } from "../../redux/auth/auth.interface";
 import { RootState } from "../../setup/redux/RootReducer";
 
@@ -21,7 +22,8 @@ export const Dashboard: FC<any> = () => {
 
   return (
     <div>
-      <Dropdown items={items}/>
+      <Dropdown items={items} />
+      <MultipleSelectChip />
     </div>
   );
 };

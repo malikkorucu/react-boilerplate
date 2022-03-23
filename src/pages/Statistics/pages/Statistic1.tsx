@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { Modal } from "../../../components/common/Modal/Modal";
 import {
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -73,7 +74,6 @@ export const Statistic1 = (props: any) => {
 
   const handleDelete = async (productId: Array<string>) => {
     const product_id = productId[0];
-    console.log(product_id);
     const res = await deleteProduct(product_id);
     toast.success("You successfully deleted the product !");
     _getProducts();
@@ -90,6 +90,7 @@ export const Statistic1 = (props: any) => {
         loading={productLoader}
       />
       <Modal show={show} setShow={setShow}>
+        <Input type="file" />
         <div className="row">
           <div className="col-md-6">
             <TextField

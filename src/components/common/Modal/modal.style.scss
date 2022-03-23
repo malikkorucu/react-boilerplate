@@ -40,6 +40,10 @@ $footer_height: 70px;
     &-header {
         height: $footer_height;
         border-bottom: 1px solid grey;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
     }
     &-body {
         padding: 20px;

@@ -31,6 +31,8 @@ li {
         box-shadow: 0 0 10px 3px rgba(172, 172, 172, 0.2);
         border-radius: 14px;
         position: absolute;
+        background-color: #fff;
+        z-index: 999;
         bottom: 0;
         left: 0;
         transform: translateY(100%);
