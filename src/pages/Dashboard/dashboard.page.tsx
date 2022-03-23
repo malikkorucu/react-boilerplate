@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
+import { Dropdown } from "../../components/common/Dropdown/Dropdown";
 import { IUser } from "../../redux/auth/auth.interface";
 import { RootState } from "../../setup/redux/RootReducer";
 
@@ -9,11 +10,18 @@ export const Dashboard: FC<any> = () => {
   const [loading, setLoading] = useState(false);
   const [placeData, setPlaceData] = useState({}) as any;
 
+  const items = [
+    { id: 1, title: "Yunus" },
+    { id: 2, title: "Yunus" },
+    { id: 3, title: "Yunus" },
+    { id: 4, title: "Yunus" },
+  ];
+
   const user = useSelector<RootState>(({ auth }) => auth.user) as IUser;
 
   return (
     <div>
-      <span>{user.name}</span>
+      <Dropdown items={items}/>
     </div>
   );
 };

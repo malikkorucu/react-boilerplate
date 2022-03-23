@@ -101,3 +101,85 @@ li {
 .MuiAlert-root {
     font-family: "Poppins", sans-serif !important;
 }
+.MuiLoadingButton-loadingIndicator {
+    color: white !important;
+}
+
+.MuiTable-root {
+    padding: 10px !important;
+}
+
+.MuiTableHead {
+    &-root {
+        border-radius: 40px !important;
+        margin-right: 30px !important;
+    }
+}
+
+.MuiTableRow {
+    &-root {
+        &.Mui-selected {
+            background: rgba(145, 158, 171, 0.16) !important;
+        }
+    }
+}
+
+.MuiTableCell-root {
+    font-family: "Poppins", sans-serif !important;
+    border: none !important;
+    padding: 15px !important;
+
+    &:first-of-type {
+        padding-left: 15px !important;
+    }
+    &:last-of-type {
+        padding-right: 15px !important;
+    }
+}
+
+thead .MuiTableCell-root {
+    border: none !important;
+    background-color: #f4f6f8 !important;
+    &:first-of-type {
+        border-bottom-left-radius: 8px !important;
+        border-top-left-radius: 8px !important;
+    }
+    &:last-of-type {
+        border-bottom-right-radius: 8px !important;
+        border-top-right-radius: 8px !important;
+    }
+}
+
+.MuiCheckbox-colorPrimary {
+    color: $primary !important;
+}
+.table-container {
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px;
+    .MuiToolbar-root:not(.MuiTablePagination-toolbar) {
+        .MuiTypography-root {
+            font-weight: bold !important;
+            &.MuiTypography-subtitle1 {
+                color: $primary !important;
+            }
+        }
+        font-family: "Poppins", sans-serif !important;
+        background-color: #f4f6f8 !important;
+        border-radius: 10px !important;
+        margin-bottom: 20px !important;
+    }
+}
+
+.MuiLinearProgress-root {
+    background-color: $secondary !important;
+}
+.MuiLinearProgress-barColorPrimary {
+    background-color: $primary !important;
+}
+.modal-backdrop {
+    z-index: 10500 !important;
+}
+.modal {
+    z-index: 10501 !important;
+}

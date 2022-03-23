@@ -40,8 +40,8 @@ export const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "korucuyunus@gmail.com",
-      password: "1234",
+      email: "",
+      password: "",
     },
     validationSchema: loginSchema,
     validateOnBlur: true,
