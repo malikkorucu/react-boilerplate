@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TableList } from "../../../components/common/Table/Table";
 import { useApi } from "../../../hooks/useApi";
 import { deleteProduct, getProducts } from "../../../services/product.service";
-import moment from "moment";
 import { toast } from "react-toastify";
 import { Modal } from "../../../components/common/Modal/Modal";
-import {
-  FormControl,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { AddProductForm } from "../components/AddProductForm";
 
 const headCells: any = [
   {
@@ -64,6 +56,7 @@ const headCells: any = [
 ];
 
 export const Statistic1 = (props: any) => {
+  const formRef = useRef() as any;
   const [show, setShow] = useState(false);
 
   const { request:_getProducts, loading:productLoader, data:products } = useApi(getProducts); // prettier-ignore
@@ -89,43 +82,11 @@ export const Statistic1 = (props: any) => {
         onAdd={() => setShow(true)}
         loading={productLoader}
       />
-      <Modal show={show} setShow={setShow}>
-        <Input type="file" />
-        <div className="row">
-          <div className="col-md-6">
-            <TextField
-              name="Title"
-              label="Title"
-              type="text"
-              variant="outlined"
-            />
-          </div>
-          <div className="col-md-6">
-            <TextField
-              name="Title"
-              label="Title"
-              type="text"
-              variant="outlined"
-            />
-          </div>
-          <div className="col-md-6 my-4">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={10}
-                label="Age"
-                onChange={() => {}}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-      </Modal>
+      <AddProductForm
+        show={show}
+        setShow={setShow}
+        getProducts={_getProducts}
+      />
     </div>
   );
 };

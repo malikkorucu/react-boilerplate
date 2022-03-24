@@ -36,7 +36,7 @@ export const Modal: FC<any> = ({ show, setShow, children }) => {
         <div className="Modal-body">{children}</div>
         <div className="Modal-footer px-3">
           <div className="row">
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <Button onClick={closeModal} type="submit" variant="contained">
                 Close
               </Button>
@@ -45,7 +45,7 @@ export const Modal: FC<any> = ({ show, setShow, children }) => {
               <Button onClick={closeModal} type="submit" variant="contained">
                 Ok
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

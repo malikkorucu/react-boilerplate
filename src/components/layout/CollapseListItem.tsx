@@ -104,6 +104,7 @@ export default function CollapseListItem(props: any) {
         <Collapse in={open} timeout="auto" unmountOnExit>
           {props.item.children.map((i: any, index: any) => (
             <ListItemButton
+              key={index}
               sx={{
                 maxHeight: 39,
                 justifyContent: props.open ? "initial" : "center",
@@ -126,7 +127,7 @@ export default function CollapseListItem(props: any) {
                 />
               </ListItemIcon>
               {props.open && (
-                <ListItemText  >
+                <ListItemText>
                   <span
                     style={{
                       fontSize: 12,

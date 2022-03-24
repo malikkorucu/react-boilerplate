@@ -31,6 +31,7 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { Add, PlusOneRounded } from "@mui/icons-material";
+import { BASE_URL } from "../../../setup/axios/SetupAxios";
 
 interface Data {
   calories: number;
@@ -131,7 +132,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell: any) => (
+        {headCells.map((headCell: any, index: any) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
@@ -298,8 +299,8 @@ export const TableList: React.FC<any> = ({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <div className="table-container">
-        <div className="row align-items-center">
+      <Box className="table-container">
+        <Box className="row align-items-center">
           <div className="col-md-6">
             <TextField
               name="Search Product"
@@ -325,7 +326,7 @@ export const TableList: React.FC<any> = ({
               </Select>
             </FormControl>
           </div>
-        </div>
+        </Box>
         <EnhancedTableToolbar
           numSelected={selected.length}
           selectedRows={selected}
@@ -357,30 +358,27 @@ export const TableList: React.FC<any> = ({
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return loading ? (
-                    <div className="w-100"></div>
+                    <tr key={index}></tr>
                   ) : (
-                    <>
-                      <TableRow
-                        hover
-                        onClick={(event) =>
-                          handleClick(event, row[uniqueField])
-                        }
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row[uniqueField]}
-                        selected={isItemSelected}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            color="primary"
-                            checked={isItemSelected}
-                            inputProps={{
-                              "aria-labelledby": labelId,
-                            }}
-                          />
-                        </TableCell>
-                        {/* <TableCell
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row[uniqueField])}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row[uniqueField]}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                          }}
+                        />
+                      </TableCell>
+                      {/* <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
@@ -388,36 +386,32 @@ export const TableList: React.FC<any> = ({
                       >
                         {row.title}
                       </TableCell> */}
-                        {/* <TableCell align="right">{row.calories}</TableCell>
+                      {/* <TableCell align="right">{row.calories}</TableCell>
                       <TableCell align="right">{row.fat}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell> */}
-                        {headCells.map((cell: any, index: any) => (
-                          <TableCell {...cell.props}>
-                            {cell.image && (
-                              <img
-                                src={
-                                  "https://bc-e-commerce-api.herokuapp.com/" +
-                                  row[headCells[index].id]
-                                }
-                                width={50}
-                                height={50}
-                                className="border rounded"
-                              />
+                      {headCells.map((cell: any, index: any) => (
+                        <TableCell key={index} {...cell.props}>
+                          {cell.image && (
+                            <img
+                              src={BASE_URL + row[headCells[index].id]}
+                              width={50}
+                              height={50}
+                              className="border rounded"
+                            />
+                          )}
+
+                          {/* TEXT */}
+                          {cell.text && row[headCells[index].id]}
+
+                          {/* DATE */}
+                          {cell.date &&
+                            moment(row[headCells[index].id]).format(
+                              "DD/MMM/YYYY"
                             )}
-
-                            {/* TEXT */}
-                            {cell.text && row[headCells[index].id]}
-
-                            {/* DATE */}
-                            {cell.date &&
-                              moment(row[headCells[index].id]).format(
-                                "DD/MMM/YYYY"
-                              )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </>
+                        </TableCell>
+                      ))}
+                    </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
@@ -447,7 +441,7 @@ export const TableList: React.FC<any> = ({
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </div>
+      </Box>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"

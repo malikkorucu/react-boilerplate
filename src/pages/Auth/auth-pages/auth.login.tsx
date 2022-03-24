@@ -28,13 +28,14 @@ export const Login = () => {
     setLoading(true);
     const res = (await login(value)) as any;
 
-    if (!res?.user) {
+    if (!res.status) {
       setErrorMessage("Lütfen bilgilerinizi kontrol ediniz !");
     } else {
-      toast.success("Hoşgeldin " + res.user.name);
+      toast.success("Hoşgeldin " + res.data.user.name);
+      const { token, user } = res.data;
+      dispatch(authRedux.actions.login(token?.access_token, user));
     }
 
-    dispatch(authRedux.actions.login(res?.token?.access_token, res?.user));
     setLoading(false);
   };
 
@@ -92,7 +93,7 @@ export const Login = () => {
               <LoadingButton
                 loading={loading}
                 type="submit"
-                className="my-3"
+                className="my-3 fluid"
                 variant="contained"
               >
                 Login

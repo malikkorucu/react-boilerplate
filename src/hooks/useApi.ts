@@ -8,8 +8,7 @@ export const useApi = (apiFunc: any) => {
   const request = async (...args: any) => {
     setLoading(true);
     const response = await apiFunc(...args);
-    setData(response);
-    console.log(response)
+    setData(response.data);
     setLoading(false);
     return response;
   };

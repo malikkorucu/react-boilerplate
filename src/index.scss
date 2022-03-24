@@ -59,8 +59,10 @@ li {
 
 .MuiButton {
     &-root {
+        &.fluid {
+            width: 100% !important;
+        }
         text-transform: none !important;
-        width: 100% !important;
         background-color: $primary !important;
         padding: 10px 20px !important;
         font-family: "Public Sans", sans-serif !important;
