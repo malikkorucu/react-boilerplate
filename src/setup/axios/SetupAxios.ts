@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const DEV = true;
+const DEV = false;
 export const BASE_URL = DEV
   ? "http://localhost:8080/"
   : "https://bc-e-commerce-api.herokuapp.com/";
