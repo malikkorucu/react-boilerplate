@@ -81,6 +81,7 @@ export const Statistic1 = (props: any) => {
         onDelete={handleDelete}
         onAdd={() => setShow(true)}
         loading={productLoader}
+        searchable={true}
       />
       <AddProductForm
         show={show}

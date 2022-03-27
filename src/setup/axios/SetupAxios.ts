@@ -1,10 +1,13 @@
 import { toast } from "react-toastify";
 
-const DEV = false;
+const DEV = true;
 export const BASE_URL = DEV
   ? "http://localhost:8080/"
   : "https://bc-e-commerce-api.herokuapp.com/";
 const API_URL = BASE_URL + "api/";
+
+export const IMAGE_URL =
+  "https://bcecommercebucket.s3.us-east-2.amazonaws.com/";
 
 export default function setupAxios(axios: any, store: any) {
   axios.defaults.headers.Accept = "application/json";

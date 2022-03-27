@@ -31,7 +31,7 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { Add, PlusOneRounded } from "@mui/icons-material";
-import { BASE_URL } from "../../../setup/axios/SetupAxios";
+import { BASE_URL, IMAGE_URL } from "../../../setup/axios/SetupAxios";
 
 interface Data {
   calories: number;
@@ -394,7 +394,7 @@ export const TableList: React.FC<any> = ({
                         <TableCell key={index} {...cell.props}>
                           {cell.image && (
                             <img
-                              src={BASE_URL + row[headCells[index].id]}
+                              src={IMAGE_URL + row[headCells[index].id]}
                               width={50}
                               height={50}
                               className="border rounded"
