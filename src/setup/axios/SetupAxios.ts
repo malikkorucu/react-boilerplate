@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { actions } from "../../redux/auth/auth.redux";
 
 const DEV = process.env.NODE_ENV === "development";
 export const BASE_URL = DEV
@@ -27,6 +28,9 @@ export default function setupAxios(axios: any, store: any) {
   );
   axios.interceptors.response.use(
     (response: any) => {
+      if (response.data.code === 401) {
+        store.dispatch(actions.logout())
+      }
       if (!response.data.status) {
         toast.error(response.data.message);
       }

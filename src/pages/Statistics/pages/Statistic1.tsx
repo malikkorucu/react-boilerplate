@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TableList } from "../../../components/common/Table/Table";
 import { useApi } from "../../../hooks/useApi";
-import { deleteProduct, getProducts } from "../../../services/product.service";
+import { deleteProducts, getProducts } from "../../../services/product.service";
 import { toast } from "react-toastify";
 import { Modal } from "../../../components/common/Modal/Modal";
 import { AddProductForm } from "../components/AddProductForm";
+import { confirm } from "../../../utils/confirm";
 
 const headCells: any = [
   {
@@ -58,6 +59,7 @@ const headCells: any = [
 export const Statistic1 = (props: any) => {
   const formRef = useRef() as any;
   const [show, setShow] = useState(false);
+  const [updateObject, setUpdateObject] = useState(null);
 
   const { request:_getProducts, loading:productLoader, data:products } = useApi(getProducts); // prettier-ignore
 
@@ -65,11 +67,23 @@ export const Statistic1 = (props: any) => {
     _getProducts();
   }, []);
 
-  const handleDelete = async (productId: Array<string>) => {
-    const product_id = productId[0];
-    const res = await deleteProduct(product_id);
-    toast.success("You successfully deleted the product !");
-    _getProducts();
+  const handleDelete = async (productIds: Array<string>) => {
+    const confirmation = await confirm(
+      "Uyarı !",
+      "Bu ürünü silmek istediğinizden emin misiniz ?"
+    );
+
+    if (confirmation) {
+      const product_ids = productIds;
+      const res = await deleteProducts(product_ids);
+      toast.success("You successfully deleted the product !");
+      _getProducts();
+    }
+  };
+
+  const handleUpdate = async (product: any) => {
+    setUpdateObject(product);
+    setShow(true);
   };
 
   return (
@@ -79,6 +93,7 @@ export const Statistic1 = (props: any) => {
         rows={products}
         uniqueField="_id"
         onDelete={handleDelete}
+        onUpdate={handleUpdate}
         onAdd={() => setShow(true)}
         loading={productLoader}
         searchable={true}
@@ -87,6 +102,8 @@ export const Statistic1 = (props: any) => {
         show={show}
         setShow={setShow}
         getProducts={_getProducts}
+        updateObject={updateObject}
+        setUpdateObject={setUpdateObject}
       />
     </div>
   );

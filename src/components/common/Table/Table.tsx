@@ -30,7 +30,7 @@ import {
   TextField,
 } from "@mui/material";
 import moment from "moment";
-import { Add, PlusOneRounded } from "@mui/icons-material";
+import { Add, Edit, PlusOneRounded } from "@mui/icons-material";
 import { BASE_URL, IMAGE_URL } from "../../../setup/axios/SetupAxios";
 
 interface Data {
@@ -163,10 +163,13 @@ interface EnhancedTableToolbarProps {
   selectedRows?: Array<any>;
   onDelete?: any;
   onAdd?: any;
+  onUpdate?: any;
+  rows?: any;
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected, selectedRows, onDelete, onAdd } = props;
+  const { numSelected, selectedRows, onDelete, onAdd, onUpdate, rows } =
+    props as any;
 
   return (
     <Toolbar
@@ -201,6 +204,18 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           Products
         </Typography>
       )}
+      {numSelected === 1 && (
+        <Tooltip
+          onClick={() => {
+            onUpdate(rows?.find((item: any) => item._id === selectedRows[0]));
+          }}
+          title="Edit"
+        >
+          <IconButton>
+            <Edit />
+          </IconButton>
+        </Tooltip>
+      )}
       {numSelected > 0 ? (
         <Tooltip
           onClick={() => {
@@ -230,6 +245,7 @@ export const TableList: React.FC<any> = ({
   onDelete,
   loading,
   onAdd,
+  onUpdate,
 }) => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
@@ -330,10 +346,12 @@ export const TableList: React.FC<any> = ({
         <EnhancedTableToolbar
           numSelected={selected.length}
           selectedRows={selected}
-          onDelete={(selectedRows: any) => {
-            onDelete(selectedRows);
+          onDelete={async (selectedRows: any) => {
+            await onDelete(selectedRows);
             setSelected([]);
           }}
+          onUpdate={onUpdate}
+          rows={rows}
           onAdd={onAdd}
         />
         <TableContainer>

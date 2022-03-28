@@ -3,7 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Dropzone } from "../../../components/common/Dropzone/Dropzone";
 import { Select } from "../../../components/common/Select/Select";
 import { useApi } from "../../../hooks/useApi";
-import { getCategories, saveProduct } from "../../../services/product.service";
+import {
+  getCategories,
+  saveProduct,
+  updateProduct,
+} from "../../../services/product.service";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Modal } from "../../../components/common/Modal/Modal";
@@ -11,15 +15,38 @@ import { convertFormData } from "../../../utils/convertFormData";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
+const _initialValues = {
+  image: "",
+  title: "",
+  price: "",
+  price_with_discount: "",
+  category: "",
+  description: "",
+};
+
 export const AddProductForm = (props: any) => {
-  const { show, setShow, getProducts } = props;
+  const { show, setShow, getProducts, updateObject, setUpdateObject } = props;
+
+  const [initialValues, setInitialValues] = useState(_initialValues);
 
   const { request:_getCategories, loading:categoryLoader, data:categories } = useApi(getCategories); // prettier-ignore
-  const { request:_submit, loading:submitLoading } = useApi(saveProduct) as any // prettier-ignore
+  const { request:_saveProduct, loading:saveLoading } = useApi(saveProduct) as any // prettier-ignore
+  const { request:_updateProduct, loading:updateLoading } = useApi(updateProduct) as any // prettier-ignore
 
   useEffect(() => {
     _getCategories();
   }, []);
+
+  useEffect(() => {
+    if (show) {
+      if (updateObject) {
+        setInitialValues(updateObject);
+      }
+    } else {
+      setInitialValues(_initialValues);
+      setUpdateObject(null);
+    }
+  }, [show]);
 
   const AddProductSchema = Yup.object().shape({
     image: Yup.mixed().required(
@@ -44,27 +71,28 @@ export const AddProductForm = (props: any) => {
 
   const handleSubmit = async (values: any) => {
     const formData = convertFormData(values);
-    const res = await _submit(formData);
-    console.log(res);
+    let res;
+
+    if (updateObject) {
+      res = await _updateProduct(values._id, values);
+    } else {
+      res = await _saveProduct(formData);
+    }
+
     if (res.status) {
       toast.success("Product saved successfully !");
       setShow(false);
       getProducts();
+      setInitialValues(_initialValues)
     }
   };
 
   const formik = useFormik({
-    initialValues: {
-      image: "",
-      title: "",
-      price: "",
-      price_with_discount: "",
-      category: "",
-      description: "",
-    },
+    initialValues,
     validationSchema: AddProductSchema,
     validateOnBlur: true,
     validateOnChange: true,
+    enableReinitialize: true,
     onSubmit: handleSubmit,
   });
 
@@ -157,7 +185,7 @@ export const AddProductForm = (props: any) => {
         </div>
         <div className="w-100 d-flex justify-content-end">
           <LoadingButton
-            loading={submitLoading}
+            loading={updateObject ? updateLoading : saveLoading}
             type="submit"
             variant="contained"
           >

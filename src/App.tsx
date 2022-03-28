@@ -8,21 +8,28 @@ import store, { persistor } from "./setup/redux/Store";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ConfirmModal } from "./components/common/ConfirmModal/ConfirmModal";
 
 function App() {
   return (
-    <div>
-      <ToastContainer />
-      <BrowserRouter>
-        <AuthInit>
-          <Provider store={store}>
-            <PersistGate persistor={persistor} loading={<div>Loading ...</div>}>
-              <Routes />
-            </PersistGate>
-          </Provider>
-        </AuthInit>
-      </BrowserRouter>
-    </div>
+    <>
+      <div>
+        <ToastContainer />
+        <BrowserRouter>
+          <AuthInit>
+            <Provider store={store}>
+              <PersistGate
+                persistor={persistor}
+                loading={<div>Loading ...</div>}
+              >
+                <Routes />
+              </PersistGate>
+            </Provider>
+          </AuthInit>
+        </BrowserRouter>
+      </div>
+      <ConfirmModal />
+    </>
   );
 }
 

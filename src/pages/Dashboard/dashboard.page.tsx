@@ -4,6 +4,7 @@ import { Dropdown } from "../../components/common/Dropdown/Dropdown";
 import MultipleSelectChip from "../../components/common/MultiSelect/MultiSelect";
 import { IUser } from "../../redux/auth/auth.interface";
 import { RootState } from "../../setup/redux/RootReducer";
+import { confirm } from "../../utils/confirm";
 
 export const Dashboard: FC<any> = () => {
   const [products, setProducts] = useState([]);
@@ -20,8 +21,27 @@ export const Dashboard: FC<any> = () => {
 
   const user = useSelector<RootState>(({ auth }) => auth.user) as IUser;
 
+  const test = async () => {
+    const res = await confirm("burası title", "burası body");
+    
+  };
+
   return (
     <div>
+      <button
+        onClick={() => {
+          test();
+        }}
+      >
+        aşslfdkj
+      </button>
+      <button
+        onClick={() => {
+          test();
+        }}
+      >
+        test
+      </button>
       <Dropdown items={items} />
       <MultipleSelectChip />
     </div>

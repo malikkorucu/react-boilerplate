@@ -7,12 +7,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import setupAxios from "./setup/axios/SetupAxios";
 import axios from "axios";
 import store from "./setup/redux/Store";
+import { ConfirmModal } from "./components/common/ConfirmModal/ConfirmModal";
 
 setupAxios(axios, store);
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <ConfirmModal />
   </React.StrictMode>,
   document.getElementById("root")
 );
