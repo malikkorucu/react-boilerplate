@@ -56,7 +56,7 @@ const headCells: any = [
   },
 ];
 
-export const Statistic1 = (props: any) => {
+export const ProductManagement = (props: any) => {
   const formRef = useRef() as any;
   const [show, setShow] = useState(false);
   const [updateObject, setUpdateObject] = useState(null);
@@ -82,6 +82,7 @@ export const Statistic1 = (props: any) => {
   };
 
   const handleUpdate = async (product: any) => {
+    console.log(product);
     setUpdateObject(product);
     setShow(true);
   };

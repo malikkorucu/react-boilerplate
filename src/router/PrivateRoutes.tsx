@@ -3,16 +3,15 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard/dashboard.page";
 import { ErrorPage } from "../pages/ErrorPage/ErrorPage";
 import { OtherPage } from "../pages/Other/other-page";
-import { Statistics } from "../pages/Statistics/Statistics";
 
 export function PrivateRoutes() {
-  //    const ProfilePage = lazy(() => import('../modules/profile/ProfilePage')) => lazy load in react router dom
+  const ProductMain = lazy(() => import("../pages/Product/product.main")); // prettier-ignore;
 
   return (
     <Suspense fallback={<div>fallback component will be come here</div>}>
       <Switch>
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/statistics" component={Statistics} />
+        <Route path="/product" component={ProductMain} />
         <Redirect exact={true} from="/" to="/dashboard" />
         <Redirect to="error/404" />
       </Switch>
