@@ -8,7 +8,7 @@ export const BASE_URL = DEV
 const API_URL = BASE_URL + "api/";
 
 export const IMAGE_URL =
-  "https://bcecommercebucket.s3.us-east-2.amazonaws.com/";
+  "https://bcecommerce.s3.us-east-2.amazonaws.com/";
 
 export default function setupAxios(axios: any, store: any) {
   axios.defaults.headers.Accept = "application/json";
