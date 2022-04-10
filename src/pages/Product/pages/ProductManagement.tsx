@@ -82,7 +82,6 @@ export const ProductManagement = (props: any) => {
   };
 
   const handleUpdate = async (product: any) => {
-    console.log(product);
     setUpdateObject(product);
     setShow(true);
   };

@@ -1,7 +1,9 @@
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
+import CustomToolbarGrid from "../../components/common/DataGrid/DataGrid";
 import { Dropdown } from "../../components/common/Dropdown/Dropdown";
 import MultipleSelectChip from "../../components/common/MultiSelect/MultiSelect";
+import MultiSelectSearch from "../../components/common/MultiSelectSearch/MultiSelectSearch";
 import { IUser } from "../../redux/auth/auth.interface";
 import { RootState } from "../../setup/redux/RootReducer";
 import { confirm } from "../../utils/confirm";
@@ -23,7 +25,6 @@ export const Dashboard: FC<any> = () => {
 
   const test = async () => {
     const res = await confirm("burası title", "burası body");
-    
   };
 
   return (
@@ -44,6 +45,9 @@ export const Dashboard: FC<any> = () => {
       </button>
       <Dropdown items={items} />
       <MultipleSelectChip />
+      <MultiSelectSearch />
+
+      <CustomToolbarGrid />
     </div>
   );
 };

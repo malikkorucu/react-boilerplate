@@ -61,14 +61,15 @@ const AppBar = styled(MuiAppBar, {
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   background: "white",
-  boxShadow: "none",
-  borderBottom: "1px solid #dedede",
+  // boxShadow: "none",
+  boxShadow: "14px 0px 10px 5px rgba(225, 224, 224, 0.3)",
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
+    // borderBottom: "none",
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
