@@ -19,8 +19,9 @@ import { useHistory } from "react-router-dom";
 import "./side.scss";
 import { Link } from "react-router-dom";
 import PopoverButton from "../common/Popover/Popover";
+import { UserCard } from "./components/UserCard";
 
-const drawerWidth = 270;
+const drawerWidth = 300;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -28,6 +29,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
+  shadow: "none",
   overflowX: "hidden",
 });
 
@@ -61,8 +63,8 @@ const AppBar = styled(MuiAppBar, {
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   background: "white",
-  // boxShadow: "none",
-  boxShadow: "14px 0px 10px 5px rgba(225, 224, 224, 0.3)",
+  boxShadow: "none",
+  // boxShadow: "14px 0px 10px 5px rgba(225, 224, 224, 0.3)",
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -85,6 +87,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  borderRight: "1px dashed red",
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -111,26 +114,18 @@ export default function SideMenu(props: any) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar open={open} style={{ zIndex: 9 }}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <img width={40} src="/logo.svg" alt="" />
-          </IconButton>
           <div className="w-100 d-flex justify-content-end">
             <PopoverButton />
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        style={{ zIndex: 10 }}
+      >
         <DrawerHeader
           sx={{
             border: "none",
@@ -141,21 +136,37 @@ export default function SideMenu(props: any) {
               display: "flex",
               width: "100%",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: open ? "space-between" : "center",
               border: "none",
             }}
           >
-            <img width={40} src="/logo.svg" alt="" />
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ margin: 0, padding: 0 }}
+            >
+              <img width={40} src="/logo.svg" alt="" />
             </IconButton>
+            {open && (
+              <IconButton onClick={handleDrawerClose}>
+                <ChevronLeftIcon />
+              </IconButton>
+            )}
           </div>
         </DrawerHeader>
         <div className="content-drawer" style={{ paddingTop: 20 }}>
+          <div
+            style={{
+              padding: open ? 15 : 0,
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <UserCard open={open} />
+          </div>
           {props.drawerItems.map((provider: any, index: any) => (
             <div key={index}>
               {open && (

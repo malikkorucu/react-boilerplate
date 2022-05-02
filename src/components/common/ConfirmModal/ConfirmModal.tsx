@@ -43,12 +43,16 @@ export const ConfirmModal: FC<any> = ({ children }) => {
         <div className="ConfirmModal-footer px-3">
           <div className="row">
             <div className="col-md-6">
-              <Button id="dismiss_btn" onClick={closeModal} variant="contained">
+              <Button id="dismiss_btn" onClick={closeModal} variant="outlined">
                 Close
               </Button>
             </div>
             <div id="ok_btn" className="col-md-6 ">
-              <Button onClick={closeModal} variant="contained">
+              <Button
+                className="secondary"
+                onClick={closeModal}
+                variant="contained"
+              >
                 Ok
               </Button>
             </div>

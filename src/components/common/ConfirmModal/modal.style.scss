@@ -21,8 +21,7 @@ $footer_height: 70px;
     }
     &-content {
         z-index: 1202;
-        min-width:500px;
-        height: 300px;
+        min-width: 500px;
         background-color: white;
         border-radius: 20px;
         position: absolute;
@@ -39,7 +38,7 @@ $footer_height: 70px;
     }
     &-header {
         height: $footer_height;
-        border-bottom: 1px solid grey;
+        border-bottom: 1px solid #dedede;
         display: flex;
         align-items: center;
         padding-left: 20px;
@@ -52,7 +51,7 @@ $footer_height: 70px;
     }
     &-footer {
         height: $footer_height;
-        border-top: 1px solid grey;
+        border-top: 1px solid #dedede;
         display: flex;
         align-items: center;
         justify-content: flex-end;

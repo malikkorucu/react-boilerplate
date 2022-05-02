@@ -1,4 +1,4 @@
-$primary: #027b55;
+$primary: #0cab57;
 $secondary: #e6f8e0;
 
 .active {
@@ -7,6 +7,22 @@ $secondary: #e6f8e0;
     font-weight: 500 !important;
 }
 
+.active-sub {
+    color: $primary !important;
+    font-weight: 500 !important;
+}
+
 .active-sub-text {
     font-weight: 600;
+}
+
+.user-card.open {
+    background-color: #f2f3f5;
+    border-radius: 15px;
+    padding: 18px 25px;
+}
+
+.MuiDrawer-paperAnchorLeft {
+    box-shadow: none !important;
+    border-right: 1px dashed #c2c2c2 !important;
 }

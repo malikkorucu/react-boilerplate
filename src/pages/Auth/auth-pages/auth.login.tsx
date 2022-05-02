@@ -7,10 +7,11 @@ import { useDispatch } from "react-redux";
 import * as authRedux from "../../../redux/auth/auth.redux";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useApi } from "../../../hooks/useApi";
 
 export const Login = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const { request: loginReq, loading: loginLoading, data } = useApi(login);
   const [errorMessage, setErrorMessage] = useState("");
 
   const loginSchema = Yup.object().shape({
@@ -25,8 +26,7 @@ export const Login = () => {
   });
 
   const signIn = async (value: any) => {
-    setLoading(true);
-    const res = (await login(value)) as any;
+    const res = (await loginReq(value)) as any;
 
     if (!res.status) {
       setErrorMessage("Lütfen bilgilerinizi kontrol ediniz !");
@@ -35,8 +35,6 @@ export const Login = () => {
       const { token, user } = res.data;
       dispatch(authRedux.actions.login(token?.access_token, user));
     }
-
-    setLoading(false);
   };
 
   const formik = useFormik({
@@ -67,7 +65,7 @@ export const Login = () => {
 
               <TextField
                 name="email"
-                className="my-3"
+                className="my-3 w-100"
                 label="Email Address"
                 type="email"
                 variant="outlined"
@@ -80,6 +78,7 @@ export const Login = () => {
               <TextField
                 name="password"
                 label="Password"
+                className="w-100"
                 type="password"
                 variant="outlined"
                 value={formik.values.password}
@@ -91,7 +90,7 @@ export const Login = () => {
                 helperText={formik.touched.password && formik.errors.password}
               />
               <LoadingButton
-                loading={loading}
+                loading={loginLoading}
                 type="submit"
                 className="my-3 fluid"
                 variant="contained"

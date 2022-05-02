@@ -1,12 +1,11 @@
 import { Dashboard } from "../../pages/Dashboard/dashboard.page";
 import {
-  EditAttributes,
-  Equalizer,
   HomeRounded,
-  ModeEditOutline,
+  Person,
   ProductionQuantityLimitsRounded,
 } from "@mui/icons-material";
 import ProductMain from "../../pages/Product/product.main";
+import { Test } from "../../pages/Test";
 
 export const DrawerMenuRoutes = [
   // GENERAL
@@ -21,6 +20,14 @@ export const DrawerMenuRoutes = [
         component: Dashboard,
         children: [],
       },
+
+    ],
+  },
+
+  //PRODUCT
+  {
+    name: "Product",
+    children: [
       {
         name: "Product",
         label: "Product",
@@ -31,44 +38,49 @@ export const DrawerMenuRoutes = [
           {
             path: "/product/product-management",
             name: "Home",
-            label: "İstatistikler",
+            label: "Products",
             icon: HomeRounded,
             component: Dashboard,
             children: [],
           },
+          {
+            path: "/product/product-categories",
+            name: "Home",
+            label: "Categories",
+            icon: HomeRounded,
+            component: Dashboard,
+            children: [],
+          },
+          {
+            path: "/product/test",
+            name: "Test",
+            label: "Test",
+            component: Test,
+            children: [],
+          },
+        ],
+      },
+    ]
+  },
+  //USER
+  {
+    name: "User",
+    children: [
+      {
+        name: "UserList",
+        label: "User List",
+        icon: Person,
+        path: "/user",
+        component: ProductMain,
+        children: [
+          {
+            path: "/user/user-management",
+            name: "UserList",
+            label: "User List",
+            children: [],
+          }
         ],
       },
     ],
   },
-  // SETTINGS
-  // {
-  //   name: "Product",
-  //   children: [
-  //     {
-  //       path: "/",
-  //       name: "Settings",
-  //       label: "Settings",
-  //       icon: ModeEditOutline,
-  //       component: Dashboard,
-  //       children: [],
-  //     },
-  //     {
-  //       path: "/",
-  //       name: "Settings",
-  //       label: "Settings",
-  //       icon: ModeEditOutline,
-  //       component: Dashboard,
-  //       children: [
-  //         {
-  //           path: "/",
-  //           name: "Settings",
-  //           label: "Settings",
-  //           icon: ModeEditOutline,
-  //           component: Dashboard,
-  //           children: [],
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ];

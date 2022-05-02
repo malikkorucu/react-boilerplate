@@ -27,8 +27,12 @@ li {
     }
 }
 
-.MuiFormControl-root {
-    // width: 100% !important;
+.MuiTextField-root {
+    width: 100% !important;
+}
+
+.MuiInputBase-formControl {
+    width: 100% !important;
 }
 
 .MuiOutlinedInput {
@@ -58,12 +62,23 @@ li {
 }
 
 .MuiButton {
+    &-contained {
+        background-color: $primary !important;
+    }
+    &-outlined {
+        border: 1px solid $primary !important;
+        color: $primary !important;
+        font-weight: 500 !important;
+    }
+    &-contained.secondary {
+        background-color: $secondary !important;
+        color: $primary !important;
+    }
     &-root {
         &.fluid {
             width: 100% !important;
         }
         text-transform: none !important;
-        background-color: $primary !important;
         padding: 10px 20px !important;
         font-family: "Public Sans", sans-serif !important;
         border-radius: 8px !important;
@@ -210,4 +225,52 @@ thead .MuiTableCell-root {
     border-right: none !important;
     box-shadow: 0 0 10px 5px rgba(225, 224, 224, 0.3) !important;
     z-index: 999;
+}
+
+.MuiTabs-root {
+    color: red !important;
+}
+
+// MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary
+.MuiPaper {
+    &-rounded {
+        box-shadow: rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px !important;
+        // padding: 25px !important;
+        border-radius: 20px !important;
+    }
+}
+
+.MuiTabs {
+    &-indicator {
+        background-color: $primary !important;
+        height: 2px !important;
+    }
+    &-flexContainer {
+        height: 48px !important;
+    }
+}
+.MuiButtonBase-root.MuiTab-root {
+    transition: 0 !important;
+    height: 50px !important;
+}
+.MuiTab {
+    transition: none !important;
+    &-root {
+        padding-top: 0 !important;
+        min-height: 41px !important;
+        padding-bottom: 0 !important;
+        font-family: "Poppins", sans-serif !important;
+        text-transform: none !important;
+        &.Mui-selected {
+            &.MuiTab-textColorPrimary {
+                color: #212b36 !important;
+            }
+        }
+    }
+    &-labelIcon {
+        // color: $primary !important;
+    }
+    &-textColorPrimary {
+        color: #637281 !important;
+    }
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -32,6 +33,10 @@ import {
 import moment from "moment";
 import { Add, Edit, PlusOneRounded } from "@mui/icons-material";
 import { BASE_URL, IMAGE_URL } from "../../../setup/axios/SetupAxios";
+import { EditModal } from "./components/EditModal";
+import { confirm } from "../../../utils/confirm";
+import { toast } from "react-toastify";
+import { useApi } from "../../../hooks/useApi";
 
 interface Data {
   calories: number;
@@ -132,27 +137,32 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell: any, index: any) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+        {headCells.map(
+          (headCell: any, index: any) =>
+            headCell.tableCell && (
+              <TableCell
+                key={headCell.id}
+                align={headCell.numeric ? "right" : "left"}
+                padding={headCell.disablePadding ? "none" : "normal"}
+                sortDirection={orderBy === headCell.id ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : "asc"}
+                  onClick={createSortHandler(headCell.id)}
+                >
+                  {headCell.label}
+                  {orderBy === headCell.id ? (
+                    <Box component="span" sx={visuallyHidden}>
+                      {order === "desc"
+                        ? "sorted descending"
+                        : "sorted ascending"}
+                    </Box>
+                  ) : null}
+                </TableSortLabel>
+              </TableCell>
+            )
+        )}
       </TableRow>
     </TableHead>
   );
@@ -165,11 +175,19 @@ interface EnhancedTableToolbarProps {
   onAdd?: any;
   onUpdate?: any;
   rows?: any;
+  tableTitle?: string;
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected, selectedRows, onDelete, onAdd, onUpdate, rows } =
-    props as any;
+  const {
+    numSelected,
+    selectedRows,
+    onDelete,
+    onAdd,
+    onUpdate,
+    rows,
+    tableTitle,
+  } = props as any;
 
   return (
     <Toolbar
@@ -201,7 +219,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           id="tableTitle"
           component="div"
         >
-          Products
+          {tableTitle}
         </Typography>
       )}
       {numSelected === 1 && (
@@ -239,13 +257,15 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 };
 
 export const TableList: React.FC<any> = ({
-  rows,
   headCells,
   uniqueField,
   onDelete,
   loading,
   onAdd,
   onUpdate,
+  tableTitle,
+  fetch,
+  _initialValues,
 }) => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
@@ -253,6 +273,12 @@ export const TableList: React.FC<any> = ({
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const { request:fetchData, loading:fetchLoading, data:rows  } = useApi(fetch); // prettier-ignore
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -307,11 +333,33 @@ export const TableList: React.FC<any> = ({
     setDense(event.target.checked);
   };
 
+  const formRef = React.useRef() as any;
+  const [show, setShow] = useState(false);
+  const [updateObject, setUpdateObject] = useState(null);
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
+
+  const handleDelete = async (productIds: Array<string>) => {
+    const confirmation = await confirm(
+      "Uyarı !",
+      "Bu ürünü silmek istediğinizden emin misiniz ?"
+    );
+
+    if (confirmation) {
+      const product_ids = productIds;
+      const res = await onDelete(product_ids);
+      toast.success("You successfully deleted the product !");
+      fetchData();
+    }
+  };
+
+  const handleUpdate = async (product: any) => {
+    setUpdateObject(product);
+    setShow(true);
+  };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -320,7 +368,7 @@ export const TableList: React.FC<any> = ({
           <div className="col-md-6">
             <TextField
               name="Search Product"
-              className="my-3"
+              className="my-3 w-100"
               label="Search Product"
               type="text"
               variant="outlined"
@@ -347,12 +395,15 @@ export const TableList: React.FC<any> = ({
           numSelected={selected.length}
           selectedRows={selected}
           onDelete={async (selectedRows: any) => {
-            await onDelete(selectedRows);
+            await handleDelete(selectedRows);
             setSelected([]);
           }}
-          onUpdate={onUpdate}
+          onUpdate={handleUpdate}
           rows={rows}
-          onAdd={onAdd}
+          onAdd={() => {
+            setShow(true);
+          }}
+          tableTitle={tableTitle}
         />
         <TableContainer>
           <Table aria-labelledby="tableTitle" size={dense ? "small" : "medium"}>
@@ -375,7 +426,7 @@ export const TableList: React.FC<any> = ({
                   const isItemSelected = isSelected(row[uniqueField]);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return loading ? (
+                  return fetchLoading ? (
                     <tr key={index}></tr>
                   ) : (
                     <TableRow
@@ -408,27 +459,30 @@ export const TableList: React.FC<any> = ({
                       <TableCell align="right">{row.fat}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell> */}
-                      {headCells.map((cell: any, index: any) => (
-                        <TableCell key={index} {...cell.props}>
-                          {cell.image && (
-                            <img
-                              src={IMAGE_URL + row[headCells[index].id]}
-                              width={50}
-                              height={50}
-                              className="border rounded"
-                            />
-                          )}
+                      {headCells.map(
+                        (cell: any, index: any) =>
+                          cell.tableCell && (
+                            <TableCell key={index} {...cell.props}>
+                              {cell.image && (
+                                <img
+                                  src={IMAGE_URL + row[headCells[index].id]}
+                                  width={50}
+                                  height={50}
+                                  className="border rounded"
+                                />
+                              )}
 
-                          {/* TEXT */}
-                          {cell.text && row[headCells[index].id]}
+                              {/* TEXT */}
+                              {cell.text && row[headCells[index].id]}
 
-                          {/* DATE */}
-                          {cell.date &&
-                            moment(row[headCells[index].id]).format(
-                              "DD/MMM/YYYY"
-                            )}
-                        </TableCell>
-                      ))}
+                              {/* DATE */}
+                              {cell.date &&
+                                moment(row[headCells[index].id]).format(
+                                  "DD/MMM/YYYY"
+                                )}
+                            </TableCell>
+                          )
+                      )}
                     </TableRow>
                   );
                 })}
@@ -444,7 +498,7 @@ export const TableList: React.FC<any> = ({
             </TableBody>
           </Table>
         </TableContainer>
-        {loading && (
+        {fetchLoading && (
           <div className="w-100">
             <LinearProgress color="primary" />
           </div>
@@ -463,6 +517,17 @@ export const TableList: React.FC<any> = ({
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
+      />
+      <EditModal
+        show={show}
+        setShow={setShow}
+        initData={fetchData}
+        updateObject={updateObject}
+        setUpdateObject={setUpdateObject}
+        onUpdate={onUpdate}
+        onAdd={onAdd}
+        headCells={headCells}
+        _initialValues={_initialValues}
       />
     </Box>
   );

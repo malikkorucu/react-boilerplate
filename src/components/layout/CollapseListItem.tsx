@@ -120,9 +120,12 @@ export default function CollapseListItem(props: any) {
                 <SvgIcon
                   component={CircleRounded}
                   fontSize="inherit"
-                  style={{ fontSize: 8 }}
+                  style={{
+                    fontSize: history.location.pathname === i.path ? 11 : 8,
+                    transition: "0.4s"
+                  }}
                   className={clsx({
-                    active: history.location.pathname === i.path,
+                    "active-sub": history.location.pathname === i.path,
                   })}
                 />
               </ListItemIcon>

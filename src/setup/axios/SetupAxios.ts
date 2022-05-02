@@ -16,7 +16,7 @@ export default function setupAxios(axios: any, store: any) {
 
   axios.interceptors.request.use(
     (config: any) => {
-      const {  auth: { accessToken } } = store.getState(); // prettier-ignore
+      const { auth: { accessToken } } = store.getState(); // prettier-ignore
 
       if (accessToken) {
         config.headers.Authorization = "Bearer " + accessToken;
@@ -24,20 +24,18 @@ export default function setupAxios(axios: any, store: any) {
 
       return config;
     },
-    (err: any) => {}
+    (err: any) => { }
   );
   axios.interceptors.response.use(
     (response: any) => {
-      if (response.data.code === 401) {
-        store.dispatch(actions.logout())
-      }
-      if (!response.data.status) {
-        toast.error(response.data.message);
-      }
       return response.data;
     },
     (err: any) => {
-      return err.response;
+      if (err?.response?.data?.code === 401) {
+        store.dispatch(actions.logout())
+      }
+      toast.error(err?.response?.data?.message);
+      return err.response.message;
     }
   );
 }
